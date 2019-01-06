@@ -273,10 +273,10 @@ var Game = (function () {
       top = this._currentBottomOffset - this.height
     }
     return {
-      top: top,
-      left: this.offsetX,
-      right: this.offsetX + this.width,
-      bottom: this._currentBottomOffset
+      top: top - 10,
+      left: this.offsetX - 10,
+      right: this.offsetX + this.width + 10,
+      bottom: this._currentBottomOffset + 10
     }
   }
 

@@ -42,6 +42,12 @@
             right: 20px;
             top: 15px;
         }
+        .score-title {
+            font-size: 0.83em;
+            position: absolute;
+            right: 72px;
+            top: 15px;
+        }
     </style>
 </head>
 <body>
@@ -49,9 +55,8 @@
 
     <h5 class="title">
         别踩白块
-        &emsp;&emsp;
-        <span>当前分数：<b id="score">0</b></span>
     </h5>
+    <span class="score-title">当前分数：<b id="score">0</b></span>
     <button type="button" id="reBtn">重玩</button>
 </div>
 <canvas id="game" width="400" height="800">
@@ -87,10 +92,10 @@
     game.onhit = function () {
       var newScore = +scoreEle.innerText + 10
       scoreEle.innerText = newScore
-      if (newScore === 100) {
+      if (newScore === 180) {
+        game.switchLevel(1.5)
+      } else if (newScore === 400) {
         game.switchLevel(2)
-      } else if (newScore === 200) {
-        game.switchLevel(3)
       }
     }
 
