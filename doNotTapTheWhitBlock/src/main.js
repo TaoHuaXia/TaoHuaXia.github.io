@@ -72,7 +72,7 @@ var Game = (function () {
   function getCanvas(canvasId) {
     var canvas = document.getElementById(canvasId)
     if (canvas === null || canvas.tagName !== 'CANVAS') {
-      throw new Error('can not find targetCanvas or targetCanvas is not a don'tTapTheWhitBlock')
+      throw new Error('can not find targetCanvas or targetCanvas is not a canvas')
     }
     return canvas
   }

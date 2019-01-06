@@ -60,49 +60,51 @@
 </body>
 <script src="./src/main.js"></script>
 <script>
-  function isPC() {
-    var userAgentInfo = navigator.userAgent;
-    var Agents = ["Android", "iPhone",
-      "SymbianOS", "Windows Phone",
-      "iPad", "iPod"];
-    var flag = true;
-    for (var v = 0; v < Agents.length; v++) {
-      if (userAgentInfo.indexOf(Agents[v]) > 0) {
-        flag = false;
-        break;
+  window.onload = function () {
+    function isPC() {
+      var userAgentInfo = navigator.userAgent;
+      var Agents = ["Android", "iPhone",
+        "SymbianOS", "Windows Phone",
+        "iPad", "iPod"];
+      var flag = true;
+      for (var v = 0; v < Agents.length; v++) {
+        if (userAgentInfo.indexOf(Agents[v]) > 0) {
+          flag = false;
+          break;
+        }
+      }
+      return flag
+    }
+
+    var canvas = document.getElementById('game')
+    canvas.width = document.body.offsetWidth
+    canvas.height = document.body.offsetHeight - 50
+    var game = Game.init('game', {
+      row: 8,
+      level: 1
+    })
+    var scoreEle = document.getElementById('score')
+    game.onhit = function () {
+      var newScore = +scoreEle.innerText + 10
+      scoreEle.innerText = newScore
+      if (newScore === 100) {
+        game.switchLevel(2)
+      } else if (newScore === 200) {
+        game.switchLevel(3)
       }
     }
-    return flag
-  }
 
-  var canvas = document.getElementById('game')
-  canvas.width = document.body.offsetWidth
-  canvas.height = document.body.offsetHeight - 50
-  var game = Game.init('game', {
-    row: 8,
-    level: 1
-  })
-  var scoreEle = document.getElementById('score')
-  game.onhit = function () {
-    var newScore = +scoreEle.innerText + 10
-    scoreEle.innerText = newScore
-    if (newScore === 200) {
-      game.switchLevel(2)
-    } else if (newScore === 500) {
-      game.switchLevel(3)
-    }
-  }
-
-  var btn = document.getElementById('reBtn')
-  if(isPC()) {
-    btn.onclick = function (ev) {
-      scoreEle.innerText = 0
-      game.restart()
-    }
-  } else {
-    btn.ontouchend = function (ev) {
-      scoreEle.innerText = 0
-      game.restart()
+    var btn = document.getElementById('reBtn')
+    if(isPC()) {
+      btn.onclick = function (ev) {
+        scoreEle.innerText = 0
+        game.restart()
+      }
+    } else {
+      btn.ontouchend = function (ev) {
+        scoreEle.innerText = 0
+        game.restart()
+      }
     }
   }
 </script>
