@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>别踩白块</title>
+    <style>
+        body {
+            padding-top: 50px;
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        html, body, h5 {
+            margin: 0;
+        }
+
+        #game {
+            width: 100%;
+            height: 100%;
+            background-color: aliceblue;
+        }
+
+        .head-bar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 50px;
+            text-align: center;
+        }
+
+        .title {
+            line-height: 50px;
+        }
+
+        #reBtn {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+        }
+    </style>
+</head>
+<body>
+<div class="head-bar">
+
+    <h5 class="title">
+        别踩白块
+        &emsp;&emsp;
+        <span>当前分数：<b id="score">0</b></span>
+    </h5>
+    <button type="button" id="reBtn">重玩</button>
+</div>
+<canvas id="game" width="400" height="800">
+
+</canvas>
+</body>
+<script src="./src/main.js"></script>
+<script>
+  function isPC() {
+    var userAgentInfo = navigator.userAgent;
+    var Agents = ["Android", "iPhone",
+      "SymbianOS", "Windows Phone",
+      "iPad", "iPod"];
+    var flag = true;
+    for (var v = 0; v < Agents.length; v++) {
+      if (userAgentInfo.indexOf(Agents[v]) > 0) {
+        flag = false;
+        break;
+      }
+    }
+    return flag
+  }
+
+  var canvas = document.getElementById('game')
+  canvas.width = document.body.offsetWidth
+  canvas.height = document.body.offsetHeight - 50
+  var game = Game.init('game', {
+    row: 8,
+    level: 1
+  })
+  var scoreEle = document.getElementById('score')
+  game.onhit = function () {
+    var newScore = +scoreEle.innerText + 10
+    scoreEle.innerText = newScore
+    if (newScore === 200) {
+      game.switchLevel(2)
+    } else if (newScore === 500) {
+      game.switchLevel(3)
+    }
+  }
+
+  var btn = document.getElementById('reBtn')
+  if(isPC()) {
+    btn.onclick = function (ev) {
+      scoreEle.innerText = 0
+      game.restart()
+    }
+  } else {
+    btn.ontouchend = function (ev) {
+      scoreEle.innerText = 0
+      game.restart()
+    }
+  }
+</script>
+</html>
